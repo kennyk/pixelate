@@ -15,15 +15,26 @@ body {
   padding: 2rem;
 }
 
-header h1 {
-  font-size: 2.5rem;
-  letter-spacing: 0.3em;
-  text-transform: lowercase;
-  background: linear-gradient(90deg, #a855f7, #06b6d4);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.tagline {
+  font-size: 1.25rem;
+  color: #666;
   margin-bottom: 2rem;
+}
+
+.tagline .kw {
+  color: #c084fc;
+}
+
+.tagline .var {
+  color: #67e8f9;
+}
+
+.tagline .prop {
+  color: #a78bfa;
+}
+
+.tagline .str {
+  color: #34d399;
 }
 
 main {
