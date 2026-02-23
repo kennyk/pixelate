@@ -99,3 +99,102 @@ targetHeightInput.addEventListener('input', () => {
   presetButtons.forEach((b) => b.classList.remove('active'));
   updatePixelateButton();
 });
+
+const outputSection = document.getElementById('outputSection');
+const outputCanvas = document.getElementById('outputCanvas');
+const warningMsg = document.getElementById('warningMsg');
+
+pixelateBtn.addEventListener('click', pixelate);
+
+function pixelate() {
+  hideError();
+  warningMsg.hidden = true;
+
+  const targetW = parseInt(targetWidthInput.value);
+  const targetH = parseInt(targetHeightInput.value);
+  const srcW = sourceImage.naturalWidth;
+  const srcH = sourceImage.naturalHeight;
+
+  // Warning if target exceeds source
+  if (targetW > srcW || targetH > srcH) {
+    warningMsg.textContent = 'Target size exceeds source image size.';
+    warningMsg.hidden = false;
+  }
+
+  // Crop calculation — center crop to match target aspect ratio
+  let cropX = 0;
+  let cropY = 0;
+  let cropW = srcW;
+  let cropH = srcH;
+
+  const srcAspect = srcW / srcH;
+  const targetAspect = targetW / targetH;
+
+  if (srcAspect > targetAspect) {
+    // Source is wider — crop horizontally
+    cropW = Math.round(srcH * targetAspect);
+    cropX = Math.round((srcW - cropW) / 2);
+  } else if (srcAspect < targetAspect) {
+    // Source is taller — crop vertically
+    cropH = Math.round(srcW / targetAspect);
+    cropY = Math.round((srcH - cropH) / 2);
+  }
+
+  // Draw cropped source to offscreen canvas
+  const offscreen = document.createElement('canvas');
+  offscreen.width = cropW;
+  offscreen.height = cropH;
+  const offCtx = offscreen.getContext('2d');
+  offCtx.drawImage(sourceImage, cropX, cropY, cropW, cropH, 0, 0, cropW, cropH);
+
+  const imageData = offCtx.getImageData(0, 0, cropW, cropH);
+  const pixels = imageData.data;
+
+  // Set up output canvas at target dimensions
+  outputCanvas.width = targetW;
+  outputCanvas.height = targetH;
+  const outCtx = outputCanvas.getContext('2d');
+
+  // Average grid cells
+  for (let ty = 0; ty < targetH; ty++) {
+    for (let tx = 0; tx < targetW; tx++) {
+      const x0 = Math.floor(tx * cropW / targetW);
+      const y0 = Math.floor(ty * cropH / targetH);
+      const x1 = Math.floor((tx + 1) * cropW / targetW);
+      const y1 = Math.floor((ty + 1) * cropH / targetH);
+
+      let r = 0, g = 0, b = 0, a = 0, count = 0;
+
+      for (let y = y0; y < y1; y++) {
+        for (let x = x0; x < x1; x++) {
+          const i = (y * cropW + x) * 4;
+          r += pixels[i];
+          g += pixels[i + 1];
+          b += pixels[i + 2];
+          a += pixels[i + 3];
+          count++;
+        }
+      }
+
+      if (count === 0) count = 1;
+      outCtx.fillStyle = `rgba(${Math.round(r / count)},${Math.round(g / count)},${Math.round(b / count)},${(a / count / 255).toFixed(3)})`;
+      outCtx.fillRect(tx, ty, 1, 1);
+    }
+  }
+
+  // Show output section
+  outputSection.hidden = false;
+  applyZoom(8); // Default to 8x so result is visible
+}
+
+function applyZoom(level) {
+  if (level === 'fit') {
+    const containerWidth = outputCanvas.parentElement.clientWidth;
+    const scale = containerWidth / outputCanvas.width;
+    outputCanvas.style.width = containerWidth + 'px';
+    outputCanvas.style.height = (outputCanvas.height * scale) + 'px';
+  } else {
+    outputCanvas.style.width = (outputCanvas.width * level) + 'px';
+    outputCanvas.style.height = (outputCanvas.height * level) + 'px';
+  }
+}
