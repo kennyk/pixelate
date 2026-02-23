@@ -209,3 +209,12 @@ zoomButtons.forEach((btn) => {
     btn.classList.add('active');
   });
 });
+
+const downloadBtn = document.getElementById('downloadBtn');
+
+downloadBtn.addEventListener('click', () => {
+  const link = document.createElement('a');
+  link.download = 'pixelated.png';
+  link.href = outputCanvas.toDataURL('image/png');
+  link.click();
+});
