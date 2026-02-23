@@ -198,3 +198,14 @@ function applyZoom(level) {
     outputCanvas.style.height = (outputCanvas.height * level) + 'px';
   }
 }
+
+const zoomButtons = document.querySelectorAll('.zoom-controls button');
+
+zoomButtons.forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const zoom = btn.dataset.zoom;
+    applyZoom(zoom === 'fit' ? 'fit' : parseInt(zoom));
+    zoomButtons.forEach((b) => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
