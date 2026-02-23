@@ -71,3 +71,31 @@ function updatePixelateButton() {
   const h = parseInt(document.getElementById('targetHeight').value);
   pixelateBtn.disabled = !(sourceImage && w > 0 && h > 0);
 }
+
+const targetWidthInput = document.getElementById('targetWidth');
+const targetHeightInput = document.getElementById('targetHeight');
+const presetButtons = document.querySelectorAll('.preset-buttons button');
+
+// Preset buttons
+presetButtons.forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const w = btn.dataset.w;
+    const h = btn.dataset.h;
+    targetWidthInput.value = w;
+    targetHeightInput.value = h;
+    presetButtons.forEach((b) => b.classList.remove('active'));
+    btn.classList.add('active');
+    updatePixelateButton();
+  });
+});
+
+// Custom inputs
+targetWidthInput.addEventListener('input', () => {
+  presetButtons.forEach((b) => b.classList.remove('active'));
+  updatePixelateButton();
+});
+
+targetHeightInput.addEventListener('input', () => {
+  presetButtons.forEach((b) => b.classList.remove('active'));
+  updatePixelateButton();
+});
