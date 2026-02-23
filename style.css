@@ -1,0 +1,235 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #0a0a0a;
+  color: #e0e0e0;
+  font-family: 'Courier New', monospace;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+}
+
+header h1 {
+  font-size: 2.5rem;
+  letter-spacing: 0.3em;
+  text-transform: lowercase;
+  background: linear-gradient(90deg, #a855f7, #06b6d4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 2rem;
+}
+
+main {
+  width: 100%;
+  max-width: 900px;
+}
+
+/* Input section - side by side */
+.input-section {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* Drop zone */
+.drop-zone {
+  flex: 1;
+  border: 2px dashed #333;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  padding: 1rem;
+  position: relative;
+}
+
+.drop-zone:hover,
+.drop-zone--active {
+  border-color: #a855f7;
+  background: rgba(168, 85, 247, 0.05);
+}
+
+.drop-zone__prompt {
+  color: #666;
+  text-align: center;
+}
+
+.drop-zone__preview {
+  max-width: 100%;
+  max-height: 180px;
+  border-radius: 4px;
+}
+
+/* Controls */
+.controls {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.controls h3 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #888;
+  margin-bottom: 0.5rem;
+}
+
+.preset-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.preset-buttons button {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  color: #e0e0e0;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.85rem;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.preset-buttons button:hover {
+  border-color: #06b6d4;
+}
+
+.preset-buttons button.active {
+  border-color: #06b6d4;
+  background: rgba(6, 182, 212, 0.1);
+}
+
+.custom-inputs {
+  display: flex;
+  gap: 1rem;
+}
+
+.custom-inputs label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: #888;
+}
+
+.custom-inputs input {
+  width: 80px;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  color: #e0e0e0;
+  padding: 0.4rem;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 0.85rem;
+}
+
+.custom-inputs input:focus {
+  outline: none;
+  border-color: #a855f7;
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, #a855f7, #06b6d4);
+  border: none;
+  color: #fff;
+  padding: 0.6rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  transition: opacity 0.2s;
+  margin-top: auto;
+}
+
+.btn-primary:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.btn-primary:not(:disabled):hover {
+  opacity: 0.85;
+}
+
+/* Output section */
+.output-section {
+  border-top: 1px solid #222;
+  padding-top: 2rem;
+}
+
+.output-display {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+  overflow: auto;
+  max-height: 70vh;
+  background: #111;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+#outputCanvas {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+.output-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.zoom-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.zoom-controls button {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  color: #e0e0e0;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.85rem;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.zoom-controls button:hover {
+  border-color: #a855f7;
+}
+
+.zoom-controls button.active {
+  border-color: #a855f7;
+  background: rgba(168, 85, 247, 0.1);
+}
+
+/* Messages */
+.error-msg {
+  color: #ef4444;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.warning-msg {
+  color: #f59e0b;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+}

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>pixelate</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header>
+    <h1>pixelate</h1>
+  </header>
+
+  <main>
+    <section class="input-section">
+      <div class="drop-zone" id="dropZone">
+        <input type="file" id="fileInput" accept="image/*" hidden>
+        <p class="drop-zone__prompt">Drop image here or click to browse</p>
+        <img id="preview" class="drop-zone__preview" hidden>
+      </div>
+
+      <div class="controls">
+        <div class="controls__presets">
+          <h3>Presets</h3>
+          <div class="preset-buttons">
+            <button data-w="16" data-h="16">16x16</button>
+            <button data-w="32" data-h="32">32x32</button>
+            <button data-w="64" data-h="64">64x64</button>
+            <button data-w="128" data-h="128">128x128</button>
+            <button data-w="256" data-h="256">256x256</button>
+          </div>
+        </div>
+
+        <div class="controls__custom">
+          <h3>Custom</h3>
+          <div class="custom-inputs">
+            <label>W <input type="number" id="targetWidth" min="1" placeholder="width"></label>
+            <label>H <input type="number" id="targetHeight" min="1" placeholder="height"></label>
+          </div>
+        </div>
+
+        <button id="pixelateBtn" class="btn-primary" disabled>Pixelate</button>
+      </div>
+    </section>
+
+    <section class="output-section" id="outputSection" hidden>
+      <div class="output-display">
+        <canvas id="outputCanvas"></canvas>
+      </div>
+      <div class="output-controls">
+        <div class="zoom-controls">
+          <button data-zoom="1">1x</button>
+          <button data-zoom="2">2x</button>
+          <button data-zoom="4">4x</button>
+          <button data-zoom="8">8x</button>
+          <button data-zoom="16">16x</button>
+          <button data-zoom="fit">Fit</button>
+        </div>
+        <button id="downloadBtn" class="btn-primary">Download PNG</button>
+      </div>
+    </section>
+
+    <p id="errorMsg" class="error-msg" hidden></p>
+    <p id="warningMsg" class="warning-msg" hidden></p>
+  </main>
+
+  <script src="./pixelate.js"></script>
+</body>
+</html>
