@@ -185,11 +185,11 @@ function pixelate() {
 
   // Show output section
   outputSection.hidden = false;
-  applyZoom(8); // Default to 8x so result is visible
+  applyZoom(1);
 
-  // Set 8x zoom button as active
+  // Set 1x zoom button as active
   document.querySelectorAll('.zoom-controls button').forEach((b) => b.classList.remove('active'));
-  document.querySelector('.zoom-controls button[data-zoom="8"]').classList.add('active');
+  document.querySelector('.zoom-controls button[data-zoom="1"]').classList.add('active');
 }
 
 function applyZoom(level) {
