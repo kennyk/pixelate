@@ -5,6 +5,9 @@ const dropPrompt = dropZone.querySelector('.drop-zone__prompt');
 const errorMsg = document.getElementById('errorMsg');
 const pixelateBtn = document.getElementById('pixelateBtn');
 
+const targetWidthInput = document.getElementById('targetWidth');
+const targetHeightInput = document.getElementById('targetHeight');
+
 let sourceImage = null;
 
 // Click to browse
@@ -67,13 +70,11 @@ function hideError() {
 }
 
 function updatePixelateButton() {
-  const w = parseInt(document.getElementById('targetWidth').value);
-  const h = parseInt(document.getElementById('targetHeight').value);
+  const w = parseInt(targetWidthInput.value);
+  const h = parseInt(targetHeightInput.value);
   pixelateBtn.disabled = !(sourceImage && w > 0 && h > 0);
 }
 
-const targetWidthInput = document.getElementById('targetWidth');
-const targetHeightInput = document.getElementById('targetHeight');
 const presetButtons = document.querySelectorAll('.preset-buttons button');
 
 // Preset buttons
@@ -185,6 +186,10 @@ function pixelate() {
   // Show output section
   outputSection.hidden = false;
   applyZoom(8); // Default to 8x so result is visible
+
+  // Set 8x zoom button as active
+  document.querySelectorAll('.zoom-controls button').forEach((b) => b.classList.remove('active'));
+  document.querySelector('.zoom-controls button[data-zoom="8"]').classList.add('active');
 }
 
 function applyZoom(level) {
